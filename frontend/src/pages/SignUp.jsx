@@ -9,38 +9,46 @@ import {
   Lock,
   LoaderCircle,
 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { toast } from 'react-toastify';
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import AuthImagePattern from "../components/AuthImagePattern";
 
 const SignUpPage = () => {
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
 
   const { signup, isSignup } = useAuth();
 
   const validateForm = () => {
     if (!formData.fullName.trim())
-      return toast.error("Vui lòng nhập họ và tên", {position: "top-center"});
-    if (!formData.email.trim()) return toast.error("Vui lòng nhập email", {position: 'top-center'});
+      return toast.error("Vui lòng nhập họ và tên", { position: "top-center" });
+    if (!formData.email.trim())
+      return toast.error("Vui lòng nhập email", { position: "top-center" });
     if (!/^\S+@\S+\.\S+$/.test(formData.email))
-      return toast.error("Định dạng email sai", {position: 'top-center'});
-    if (!formData.password.trim()) return toast.error("Vui lòng nhập mật khẩu", {position: 'top-center'});
+      return toast.error("Định dạng email sai", { position: "top-center" });
+    if (!formData.password.trim())
+      return toast.error("Vui lòng nhập mật khẩu", { position: "top-center" });
     if (formData.password.length < 6)
-      return toast.error("Mật khẩu phải có ít nhất 6 kí tự", {position: "top-center"});
+      return toast.error("Mật khẩu phải có ít nhất 6 kí tự", {
+        position: "top-center",
+      });
     return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const success = validateForm();
-    if (success == true) signup(formData);
+    if (success === true) {
+      await signup(formData);
+      navigate('/login');
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-base-200 grid lg:grid-cols-2">
@@ -143,9 +151,6 @@ const SignUpPage = () => {
                 "Tạo tài khoản"
               )}
             </button>
-            {error && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
-            )}
           </form>
           <div className="text-center">
             <p className="text-base-content/60">
@@ -155,9 +160,9 @@ const SignUpPage = () => {
         </div>
       </div>
       {/* Right side */}
-      <AuthImagePattern 
-      title="Join our community"
-      subtitle="Connect with friends, share moments and stay in touch with you"
+      <AuthImagePattern
+        title="Join our community"
+        subtitle="Connect with friends, share moments and stay in touch with you"
       />
     </div>
   );

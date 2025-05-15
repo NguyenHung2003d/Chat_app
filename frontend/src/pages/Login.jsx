@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { useAuth } from "../../store/useAuth";
-import {MessageSquare} from 'lucide-react'
+import {
+  MessageSquare,
+  User,
+  Mail,
+  Eye,
+  EyeOff,
+  Lock,
+  LoaderCircle,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import AuthImagePattern from "../components/AuthImagePattern";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -8,10 +18,10 @@ const LoginPage = () => {
     email: "",
     password: "",
   });
-  const [login, setLogin] = useAuth();
-  const handleSubmit = (e) => {
+  const { login, isLoggingIn } = useAuth();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login(formData);
+    await login(formData);
   };
 
   return (
@@ -26,31 +36,14 @@ const LoginPage = () => {
                 <MessageSquare className="size-6 text-primary" />
               </div>
               <h1 className="text-2xl font-bold mt-2">Chào mừng trở lại</h1>
-              <p className="text-base-content/60">Đăng nhập tài khoản của bạn </p>
+              <p className="text-base-content/60">
+                Đăng nhập tài khoản của bạn{" "}
+              </p>
             </div>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Họ và tên</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                  <User className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="text"
-                  className="input input-bordered w-full pl-10"
-                  placeholder="Nguyễn Văn A"
-                  value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
-                />
-              </div>
-            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Email</span>
@@ -103,23 +96,20 @@ const LoginPage = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
-              disabled={isSignup}
+              disabled={isLoggingIn}
             >
-              {isSignup ? (
+              {isLoggingIn ? (
                 <>
                   <LoaderCircle className="size-5 animate-spin" />
                 </>
               ) : (
-                "Tạo tài khoản"
+                "Đăng nhập"
               )}
             </button>
-            {error && (
-              <div className="text-red-500 text-sm text-center">{error}</div>
-            )}
           </form>
           <div className="text-center">
             <p className="text-base-content/60">
-              Đã có tài khoản ? <Link to="/login">Đăng nhập</Link>
+              Không có tài khoản ? <Link to="/signup">Tạo tài khoản</Link>
             </p>
           </div>
         </div>

@@ -6,7 +6,7 @@ export const useAuth = create((set) => ({
   authUser: null,
   isCheckingAuth: true,
   isSignup: false,
-  isLogging: false,
+  isLoggingIn: false,
   isUpdatingProfile: false,
 
   checkAuth: async () => {
@@ -20,27 +20,46 @@ export const useAuth = create((set) => ({
       set({ isCheckingAuth: false });
     }
   },
-  
+
+  login: async (data) => {
+    set({ isLoggingIn: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+      toast.success("Đăng nhập thành công", { position: "top-center" });
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isLoggingIn: false });
+    }
+  },
+
   signup: async (data) => {
     set({ isSignup: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
       set({ authUser: res.data });
-      toast.success("Tài khoản được tạo thành công", {position: 'top-center'});
+      toast.success("Tài khoản được tạo thành công", {
+        position: "top-center",
+      });
     } catch (error) {
       console.log("Signup Error:", error);
-      toast.error(error.response?.data?.message || "Đăng ký lỗi. Vui lòng thử lại");
-    }finally{
-        set({isSignup: false})
+      toast.error(
+        error.response?.data?.message || "Đăng ký lỗi. Vui lòng thử lại"
+      );
+    } finally {
+      set({ isSignup: false });
     }
   },
   logout: async () => {
     try {
-      await axiosInstance.post('/auth/logout')
-      set({authUser: null})
-      toast.success('Đăng xuất tài khoản thành công', {position: 'top-center'})
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+      toast.success("Đăng xuất tài khoản thành công", {
+        position: "top-center",
+      });
     } catch (error) {
-      toast.error(error.response?.data?.message)
+      toast.error(error.response?.data?.message);
     }
-  }
+  },
 }));
