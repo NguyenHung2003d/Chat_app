@@ -62,4 +62,15 @@ export const useAuth = create((set) => ({
       toast.error(error.response?.data?.message);
     }
   },
+  updateProfile: async () => {
+    try {
+      await axiosInstance.put("/auth/update-profile");
+      set({ authUser: false });
+      toast.success("Cập nhật thông tin thành công", {
+        position: "top-center",
+      });
+    } catch (error) {
+      toast.error(error.response?.data?.message);
+    }
+  },
 }));
