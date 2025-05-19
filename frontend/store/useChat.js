@@ -74,7 +74,8 @@ export const useChat = create(
         const socket = useAuth.getState().socket;
         // Check if socket is connected
         socket.on("newMessage", (newMessage) => {
-          const isMessageSentFromSelectedUser = newMessage.sender._id === selectedUser._id;
+          const isMessageSentFromSelectedUser =
+            newMessage.sender?._id === selectedUser?._id;
           if (!isMessageSentFromSelectedUser) return;
           // Check if the message is already in the messages array
           set({
@@ -85,9 +86,9 @@ export const useChat = create(
 
       unsubscribeFromMessages: () => {
         const socket = useAuth.getState().socket;
+        if (!socket) return;
         socket.off("newMessage");
       },
-
     }),
     {
       name: "chat-storage",
