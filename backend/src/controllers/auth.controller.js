@@ -4,50 +4,54 @@ import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 
 export const signup = async (req, res) => {
-  const { fullName, password, email } = req.body;
-  try {
-    if (!fullName || !email || !password) {
-      return res.status(400).json({
-        message: "Vui lòng nhập các trường bắt buộc ... ",
-      });
-    }
-    if (password.length < 6) {
-      return res.status(400).json({
-        message: "Mật khẩu phải ít nhất 6 kí tự ...",
-      });
-    }
-    const user = await User.findOne({ email });
-    if (user) return res.status(400).json({ message: "Email đã tồn tại. Vui lòng dùng email khác và thử lại..." });
-    const salt = bcrypt.genSaltSync(10);
-    const hashPassword = await bcrypt.hash(password, salt);
+  const { fullName, email, password } = req.body;
 
+  // ✅ Validate đầu vào
+  const validationError = validateSignupInput({ fullName, email, password });
+  if (validationError) {
+    return res.status(400).json({ message: validationError });
+  }
+
+  try {
+    // Check email đã tồn tại
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ message: "Email đã được sử dụng. Vui lòng dùng email khác." });
+    }
+
+    // Hash password để bảo mật nè ...
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Tạo user mới cho hệ thống ...
     const newUser = new User({
       fullName,
       email,
-      password: hashPassword,
+      password: hashedPassword,
     });
-    if (newUser) {
-      generateToken(newUser._id, res);
-      await newUser.save();
-      res.status(201).json({
-        _id: newUser._id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        profilePic: newUser.profilePic,
-      });
-    } else {
-      res.status(400).json({ message: "Không thể xác định thông tin người dùng ... " });
-    }
+
+    await newUser.save();
+
+    // Tạo JWT và trả về user
+    generateToken(newUser._id, res);
+    res.status(201).json({
+      _id: newUser._id,
+      fullName: newUser.fullName,
+      email: newUser.email,
+      profilePic: newUser.profilePic,
+    });
   } catch (error) {
-    console.log("Error in signup controller", error.message);
-    res.status(500).json({ message: "Lỗi máy chủ. Vui lòng liên hệ admin ..." });
+    console.error("Lỗi khi đăng ký:", error.message);
+    res.status(500).json({ message: "Máy chủ lỗi. Vui lòng thử lại sau." });
   }
 };
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
 
-  // 1️⃣ Kiểm tra đầu vào thiếu
+  // 1️⃣ Kiểm tra đầu vào thiếu ...
   if (!email || !password) {
     return res
       .status(400)
@@ -102,7 +106,9 @@ export const updateProfile = async (req, res) => {
     const { profilePic } = req.body;
     const userId = req.user._id;
     if (!profilePic) {
-      return res.status(400).json({ message: "Thiếu ảnh đại diện kìa bạn ơi ..." });
+      return res
+        .status(400)
+        .json({ message: "Thiếu ảnh đại diện kìa bạn ơi ..." });
     }
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
     const updateUser = await User.findByIdAndUpdate(
@@ -115,7 +121,9 @@ export const updateProfile = async (req, res) => {
     res.status(200).json({ updateUser });
   } catch (error) {
     console.log("Lỗi trong cập nhật ảnh đại diện ... ", error);
-    res.status(500).json({ message: "Lỗi ở máy chủ rồi. Liên hệ admin ngay nhé ..." });
+    res
+      .status(500)
+      .json({ message: "Lỗi ở máy chủ rồi. Liên hệ admin ngay nhé ..." });
   }
 };
 

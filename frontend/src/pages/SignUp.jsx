@@ -42,13 +42,17 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = validateForm();
-    if (success === true) {
-      await signup(formData);
+  
+    if (!validateForm()) return;
+  
+    try {
+      await signup(formData); 
       navigate("/login");
+    } catch (err) {
+      console.error("Đăng ký thất bại:", err);
     }
   };
-
+  
   return (
     <div className="min-h-screen bg-base-200 grid lg:grid-cols-2">
       {/* Left Side */}
