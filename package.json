@@ -3,13 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
-    "build:frontend": "pnpm --prefix frontend run build",
-    "build:backend": "echo 'Nothing to build in backend'",
-    "build": "pnpm run build:frontend && pnpm run build:backend",
-    "render-build": "pnpm run setup && pnpm run build",
-    "start": "pnpm --prefix backend run start"
-  },
+  "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
+  "build": "pnpm --prefix frontend run build",
+  "start": "node backend/index.js",
+  "render-build": "pnpm run setup && pnpm run build"
+},
   "keywords": [],
   "author": "",
   "license": "ISC"
