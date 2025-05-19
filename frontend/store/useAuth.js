@@ -20,7 +20,6 @@ export const useAuth = create((set, get) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch (error) {
-      console.log("Lỗi trong checkAuth: ", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
