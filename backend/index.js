@@ -33,7 +33,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 // Đường dẫn đến frontend
-const frontendPath = path.join(__dirname, "frontend", "dist");
+const frontendPath = path.join(__dirname, "..", "frontend", "dist");
 app.use(express.static(frontendPath));
 
 // Bắt mọi route khác trả về index.html
