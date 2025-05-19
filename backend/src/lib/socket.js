@@ -20,17 +20,12 @@ export function getReceiverSocketId(userId) {
 const userSocketMap = {}; //{userId: socketId}
 
 io.on("connection", (socket) => {
-
-  console.log("A user connected", socket.id);
-
   const userId = socket.handshake.query.userId;
   if (userId) {
     userSocketMap[userId] = socket.id;
 
     //io.emit() // Gửi sự kiện cho tất cả người dùng
     io.emit("getOnlineUsers", Object.keys(userSocketMap)); // Gửi danh sách người dùng trực tuyến cho tất cả người dùng
-
-    console.log("User ID:", userId);
   }
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);

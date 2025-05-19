@@ -7,12 +7,18 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { app, server } from "./src/lib/socket.js";
 import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+// Chuẩn hóa __dirname trong ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const PORT = process.env.PORT;
-const __dirname = path.resolve();
 
-app.use(express.json({limit: '10mb'}));
-app.use(express.urlencoded({extended: true, limit: '10mb'}))
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -23,17 +29,23 @@ app.use(
 );
 app.use(cookieParser());
 
-// app.use("/api/auth", authRoutes);
-// app.use("/api/messages", messageRoutes);
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
+// Đường dẫn đến frontend
 const frontendPath = path.join(__dirname, "frontend", "dist");
 app.use(express.static(frontendPath));
+
+// Bắt mọi route khác trả về index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
 
+// Start server
 server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`✅ Server is running on http://localhost:${PORT}`);
 });
 
+// Kết nối DB
 connectDB();
