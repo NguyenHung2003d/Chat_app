@@ -45,24 +45,21 @@ export const useChat = create(
 
       sendMessage: async (messageData) => {
         const { selectedUser, messages } = get();
-
+      
         if (!selectedUser || !selectedUser._id) {
           toast.error("Không có người nhận tin nhắn");
           return;
         }
-
+      
         try {
           const res = await axiosInstance.post(
             `/messages/send/${selectedUser._id}`,
             messageData
           );
-
+      
           const newMessage = res.data;
-          const newMessages = Array.isArray(messages)
-            ? [...messages, newMessage]
-            : [newMessage];
-
-          set({ messages: [...messages, newMessages] });
+      
+          set({ messages: [...messages, newMessage] });
         } catch (error) {
           const message =
             error?.response?.data?.message ||
@@ -71,6 +68,7 @@ export const useChat = create(
           toast.error(message);
         }
       },
+      
 
       subscribeToMessages: () => {
         const { selectedUser } = get();
