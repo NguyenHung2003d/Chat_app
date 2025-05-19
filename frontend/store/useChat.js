@@ -62,7 +62,7 @@ export const useChat = create(
             ? [...messages, newMessage]
             : [newMessage];
 
-          set({ messages: newMessages });
+          set({ messages: [...messages, newMessages] });
         } catch (error) {
           const message =
             error?.response?.data?.message ||
