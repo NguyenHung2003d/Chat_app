@@ -4,11 +4,14 @@
   "description": "",
   "scripts": {
     "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
-    "build": "npx pnpm install && npx pnpm --prefix frontend run build",
+    "build": "pnpm install && pnpm --prefix frontend run build",
     "start": "node backend/index.js",
     "render-build": "pnpm run setup && pnpm run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "pnpm": "^10.11.0"
+  }
 }
