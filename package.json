@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-  "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
-  "build": "npm install -g pnpm && pnpm install && pnpm --prefix frontend run build",
-  "start": "node backend/index.js",
-  "render-build": "pnpm run setup && pnpm run build"
-},
+    "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
+    "build": "npx pnpm install && npx pnpm --prefix frontend run build",
+    "start": "node backend/index.js",
+    "render-build": "pnpm run setup && pnpm run build"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
