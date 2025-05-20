@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
   "setup": "pnpm install --prefix frontend && pnpm install --prefix backend",
-  "build": "pnpm --prefix frontend run build",
+  "build": "pnpm i && pnpm --prefix frontend run build",
   "start": "node backend/index.js",
   "render-build": "pnpm run setup && pnpm run build"
 },

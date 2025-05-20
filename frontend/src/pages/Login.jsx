@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useAuth } from "../../store/useAuth";
 import {
   MessageSquare,
-  User,
   Mail,
   Eye,
   EyeOff,
