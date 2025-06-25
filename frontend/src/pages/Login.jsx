@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -97,7 +98,6 @@ const LoginPage = () => {
                 Quên mật khẩu?
               </Link>
             </div>
-
             <button
               type="submit"
               className="btn btn-primary w-full"
@@ -111,6 +111,19 @@ const LoginPage = () => {
                 "Đăng nhập"
               )}
             </button>
+            <div className="divider">hoặc</div>
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  console.log("Google Login Success", credentialResponse);
+                }}
+                onError={() => {
+                  console.log("Google Login Failed");
+                }}
+                width="100"
+              />
+            </div>
+            ;
           </form>
           <div className="text-center">
             <p className="text-base-content/60">
