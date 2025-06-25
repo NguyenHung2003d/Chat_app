@@ -54,9 +54,9 @@ pnpm install
 ```bash
 cd backend
 # Development mode
-npm run dev
+pnpm run dev
 # hoặc
-npm start
+pnpm start
 ```
 
 #### Frontend
