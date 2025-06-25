@@ -123,7 +123,6 @@ const LoginPage = () => {
                 width="100"
               />
             </div>
-            ;
           </form>
           <div className="text-center">
             <p className="text-base-content/60">
