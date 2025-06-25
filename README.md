@@ -8,7 +8,6 @@
 - **Giao diện thân thiện**: Thiết kế đơn giản, dễ sử dụng
 - **Đa thiết bị**: Hoạt động tốt trên desktop và mobile
 - **Bảo mật**: Mã hóa tin nhắn an toàn
-- **Emoji & Media**: Hỗ trợ emoji và chia sẻ hình ảnh
 
 ## 🛠️ Công nghệ sử dụng
 
@@ -71,34 +70,3 @@ pnpm run build
 
 # Preview production build
 pnpm run preview
-```
-
-- Backend sẽ chạy tại `http://localhost:5000`
-- Frontend sẽ chạy tại `http://localhost:5173`
-- 
-## 📖 Hướng dẫn sử dụng
-
-### Đăng ký tài khoản
-1. Truy cập trang chủ
-2. Click "Đăng ký"
-3. Điền thông tin cần thiết
-4. Xác thực email (nếu có)
-
-### Bắt đầu chat
-1. Đăng nhập vào tài khoản
-2. Chọn người dùng hoặc tạo nhóm chat
-3. Bắt đầu trò chuyện
-
-### Tính năng nâng cao
-- Tạo nhóm chat
-- Chia sẻ file và hình ảnh
-- Tìm kiếm tin nhắn
-- Thông báo real-time
-
-## 🚀 Deployment
-```bash
-# Đăng nhập Heroku
-heroku login
-
-# Tạo app mới cho backend
-heroku create your-chat-app-backend
