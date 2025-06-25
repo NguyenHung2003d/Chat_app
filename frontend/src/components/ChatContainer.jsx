@@ -33,10 +33,10 @@ const ChatContainer = () => {
 
   useEffect(() => {
     if (messageEndRef.current && messages)
-    messageEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "end",
-    });
+      messageEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
   }, [messages]);
 
   if (isMessageLoading) {

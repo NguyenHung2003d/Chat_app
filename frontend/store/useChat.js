@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { useAuth } from "./useAuth";
 

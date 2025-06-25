@@ -8,7 +8,6 @@ const SlideBar = () => {
   const { getUsers, users, selectedUser, setSelectedUser, isUserLoading } =
     useChat();
 
-  // Lấy danh sách người dùng từ useChat
   const { onlineUsers } = useAuth();
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
 
@@ -31,7 +30,6 @@ const SlideBar = () => {
             Những liên hệ khác
           </span>
         </div>
-        {/* Tìm kiếm người dùng */}
         <div className="mt-3 hidden lg:flex items-center gap-2">
           <label className="cursor-pointer flex items-center gap-2">
             <input
@@ -46,7 +44,6 @@ const SlideBar = () => {
             ({onlineUsers.length - 1} người đang hoạt động)
           </span>
         </div>
-        {/* Danh sách liên hệ */}
         <div className="overflow-y-auto w-full py-3">
           {Array.isArray(users) &&
             filteredUsers.map((user) => (
@@ -69,7 +66,6 @@ const SlideBar = () => {
                     <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border ring-2 ring-base-900 rounded-full" />
                   )}
                 </div>
-                {/* Thông tin người dùng */}
                 <div className="hidden lg:block text-left min-w-0 flex-1">
                   <div className="font-medium">{user.fullName}</div>
                   <div className="text-sm text-zinc-500">

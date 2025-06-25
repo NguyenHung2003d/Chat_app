@@ -25,10 +25,8 @@ const LoginPage = () => {
 
   return (
     <div className="h-screen bg-base-200 grid lg:grid-cols-2">
-      {/* Left Side - Form */}
       <div className="flex flex-col justify-center items-center p-6 sm:p-12  ">
         <div className="w-full max-w-md space-y-8">
-          {/* Logo & Title */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
               <div className="size-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
@@ -41,7 +39,6 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
               <label className="label">
@@ -92,6 +89,15 @@ const LoginPage = () => {
                 </button>
               </div>
             </div>
+            <div className="text-right text-sm">
+              <Link
+                to="/forgot-password"
+                className="text-primary hover:underline hover:text-primary/80 transition-all"
+              >
+                Quên mật khẩu?
+              </Link>
+            </div>
+
             <button
               type="submit"
               className="btn btn-primary w-full"
@@ -113,7 +119,6 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      {/* Right side */}
       <AuthImagePattern
         title="Join our community"
         subtitle="Connect with friends, share moments and stay in touch with you"

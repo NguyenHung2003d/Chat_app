@@ -16,22 +16,19 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-// Lưu trữ người dùng trực tuyến
-const userSocketMap = {}; //{userId: socketId}
+const userSocketMap = {}; 
 
 io.on("connection", (socket) => {
   const userId = socket.handshake.query.userId;
   if (userId) {
     userSocketMap[userId] = socket.id;
 
-    //io.emit() // Gửi sự kiện cho tất cả người dùng
-    io.emit("getOnlineUsers", Object.keys(userSocketMap)); // Gửi danh sách người dùng trực tuyến cho tất cả người dùng
+    io.emit("getOnlineUsers", Object.keys(userSocketMap)); 
   }
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id);
-    // Xóa người dùng khỏi danh sách trực tuyến
     delete userSocketMap[userId];
-    io.emit("getOnlineUsers", Object.keys(userSocketMap)); // Gửi danh sách người dùng trực tuyến cho tất cả người dùng
+    io.emit("getOnlineUsers", Object.keys(userSocketMap)); 
   });
 });
 
